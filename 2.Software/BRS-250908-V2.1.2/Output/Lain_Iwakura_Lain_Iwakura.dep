@@ -48,7 +48,7 @@ I (..\..\User\APP\pid\pid.h)(0x67E00570)
 I (..\..\User\APP\pid\struct_typedef.h)(0x61063AF7)
 I (..\..\User\BSP\bsp_general_tim\bsp_general_tim.h)(0x66F54F54)
 I (..\..\User\BSP\bsp_key\bsp_key.h)(0x64259AEF)
-I (..\..\User\APP\motor_control\motor_control.h)(0x69636EBF)
+I (..\..\User\APP\motor_control\motor_control.h)(0x69636F05)
 I (..\..\User\APP\remote\remote.h)(0x670A7BFD)
 F (..\..\User\main.h)(0x68739EF0)()
 F (..\..\User\stm32f4xx_it.c)(0x6873BAEC)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\User -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\User\APP\GO-M8010-6 -I ..\..\User\APP\motor_control -I ..\..\User\APP\pid -I ..\..\User\APP\remote -I ..\..\User\BSP\bsp_can -I ..\..\User\BSP\bsp_clkconfig -I ..\..\User\BSP\bsp_debug_usart -I ..\..\User\BSP\bsp_general_tim -I ..\..\User\BSP\bsp_key -I ..\..\User\BSP\bsp_usart_dma-ID:\Keil_v5\ARM\Pack\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -DUSE_STDPERIPH_DRIVER -DSTM32F427_437xx-o ..\..\output\stm32f4xx_it.o --omf_browse ..\..\output\stm32f4xx_it.crf --depend ..\..\output\stm32f4xx_it.d)
@@ -96,7 +96,7 @@ I (..\..\User\APP\pid\pid.h)(0x67E00570)
 I (..\..\User\APP\pid\struct_typedef.h)(0x61063AF7)
 I (..\..\User\APP\GO-M8010-6\GO_M8010_6.h)(0x67F28C09)
 I (..\..\User\APP\GO-M8010-6\ris_protocol.h)(0x66F56F8B)
-I (..\..\User\APP\motor_control\motor_control.h)(0x69636EBF)
+I (..\..\User\APP\motor_control\motor_control.h)(0x69636F05)
 I (..\..\User\BSP\bsp_usart_dma\bsp_usart_dma.h)(0x66F54F55)
 I (..\..\User\APP\remote\remote.h)(0x670A7BFD)
 F (..\..\User\stm32f4xx_it.h)(0x58221742)()
@@ -109,8 +109,8 @@ I (D:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x569DEA3A)
 F (..\..\User\APP\GO-M8010-6\GO_M8010_6.h)(0x67F28C09)()
 F (..\..\User\APP\GO-M8010-6\ris_protocol.h)(0x66F56F8B)()
 F (..\..\User\APP\GO-M8010-6\crc_ccitt.h)(0x66F57175)()
-F (..\..\User\APP\motor_control\motor_control.c)(0x68BE6804)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\User -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\User\APP\GO-M8010-6 -I ..\..\User\APP\motor_control -I ..\..\User\APP\pid -I ..\..\User\APP\remote -I ..\..\User\BSP\bsp_can -I ..\..\User\BSP\bsp_clkconfig -I ..\..\User\BSP\bsp_debug_usart -I ..\..\User\BSP\bsp_general_tim -I ..\..\User\BSP\bsp_key -I ..\..\User\BSP\bsp_usart_dma-ID:\Keil_v5\ARM\Pack\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -DUSE_STDPERIPH_DRIVER -DSTM32F427_437xx-o ..\..\output\motor_control.o --omf_browse ..\..\output\motor_control.crf --depend ..\..\output\motor_control.d)
-I (..\..\User\APP\motor_control\motor_control.h)(0x69636EBF)
+F (..\..\User\APP\motor_control\motor_control.c)(0x6963B8B6)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\User -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\User\APP\GO-M8010-6 -I ..\..\User\APP\motor_control -I ..\..\User\APP\pid -I ..\..\User\APP\remote -I ..\..\User\BSP\bsp_can -I ..\..\User\BSP\bsp_clkconfig -I ..\..\User\BSP\bsp_debug_usart -I ..\..\User\BSP\bsp_general_tim -I ..\..\User\BSP\bsp_key -I ..\..\User\BSP\bsp_usart_dma-ID:\Keil_v5\ARM\Pack\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -DUSE_STDPERIPH_DRIVER -DSTM32F427_437xx-o ..\..\output\motor_control.o --omf_browse ..\..\output\motor_control.crf --depend ..\..\output\motor_control.d)
+I (..\..\User\APP\motor_control\motor_control.h)(0x69636F05)
 I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6417278F)
 I (..\..\Libraries\CMSIS\Include\core_cm4.h)(0x581CC64D)
 I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x569DEA3A)
@@ -156,7 +156,7 @@ I (D:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x569DEA3A)
 I (..\..\User\BSP\bsp_key\bsp_key.h)(0x64259AEF)
 I (..\..\User\APP\remote\remote.h)(0x670A7BFD)
 I (D:\Keil_v5\ARM\ARMCC\include\math.h)(0x569DEA3A)
-F (..\..\User\APP\motor_control\motor_control.h)(0x69636EBF)()
+F (..\..\User\APP\motor_control\motor_control.h)(0x69636F05)()
 F (..\..\User\APP\pid\pid.c)(0x67E012D2)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\User -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\User\APP\GO-M8010-6 -I ..\..\User\APP\motor_control -I ..\..\User\APP\pid -I ..\..\User\APP\remote -I ..\..\User\BSP\bsp_can -I ..\..\User\BSP\bsp_clkconfig -I ..\..\User\BSP\bsp_debug_usart -I ..\..\User\BSP\bsp_general_tim -I ..\..\User\BSP\bsp_key -I ..\..\User\BSP\bsp_usart_dma-ID:\Keil_v5\ARM\Pack\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -DUSE_STDPERIPH_DRIVER -DSTM32F427_437xx-o ..\..\output\pid.o --omf_browse ..\..\output\pid.crf --depend ..\..\output\pid.d)
 I (..\..\User\APP\pid\pid.h)(0x67E00570)
 I (..\..\User\APP\pid\struct_typedef.h)(0x61063AF7)

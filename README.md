@@ -7,3 +7,5 @@ The parallel quadruped robot dog with a miniature-like structure, which uses joi
 ![image](https://github.com/Lain-Ego0/BRS-Parallel-Robot/blob/main/4.Picture/Portfolio-01-2.png)
 
 ![image](https://github.com/Lain-Ego0/BRS-Parallel-Robot/blob/main/4.Picture/Portfolio-01-3.png)
+
+![image-20260111221812117](./assets/image-20260111221812117.png)

@@ -10,7 +10,7 @@
 #define speed_p 0.01f
 #define speed_i 0.0006f
 #define speed_d 0.0015f    
-#define rang_p 35.9f
+#define rang_p 5.9f
 #define rang_i 0.0f
 #define rang_d 1.0f
 #define speed_max_out 3.50
