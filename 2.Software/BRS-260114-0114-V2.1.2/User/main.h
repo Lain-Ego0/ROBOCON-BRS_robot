@@ -12,5 +12,10 @@
 #include "motor_control.h" 
 #include "remote.h"
 
+extern int step_rate;
+extern int step_cycle;
+extern int time_currently;
+extern int time_turn;
+
 #endif 
 
