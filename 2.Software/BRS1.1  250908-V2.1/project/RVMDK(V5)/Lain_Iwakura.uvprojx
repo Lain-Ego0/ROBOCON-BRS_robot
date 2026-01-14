@@ -500,16 +500,6 @@
               <FilePath>..\..\User\BSP\bsp_general_tim\bsp_general_tim.h</FilePath>
             </File>
             <File>
-              <FileName>bsp_key.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\BSP\bsp_key\bsp_key.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_key.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\User\BSP\bsp_key\bsp_key.h</FilePath>
-            </File>
-            <File>
               <FileName>bsp_usart_dma.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\BSP\bsp_usart_dma\bsp_usart_dma.c</FilePath>

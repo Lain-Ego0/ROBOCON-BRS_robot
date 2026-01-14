@@ -12,5 +12,9 @@
 #include "motor_control.h" 
 #include "remote.h"
 
-#endif 
+// 系统控制节拍标志 (1ms 触发一次)
+extern volatile uint8_t g_system_tick;
+
+#endif
+
 
