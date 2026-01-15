@@ -28,3 +28,40 @@ Data Reading Demonstration in Calibration Mode
 校准模式的数据读取演示
 
 ![image-20260111221812117](./assets/image-20260111221812117.png)
+
+# Project Timeline/项目时间线：
+
+- August 2024: Project initiation
+
+- December 2024: Completion of the first version of the mechanical prototype
+
+- February 2025: Completion of the first version of the slave computer
+
+- April 2025: Completion of the master computer
+
+- June 2025: Completion of the navigation function
+
+- July 2025: Completion of the second version of the slave computer; participation in the competition in the same month
+
+- 2024年8月 项目启动 
+
+- 2024年12月 完成第一版机械实物 
+
+- 2025年2月 完成第一版下位机 
+
+- 2025年4月 完成上位机 
+
+- 2025年6月 完成导航功能 
+
+- 2025年7月 完成第二版下位机 同月参赛。
+
+  
+
+# Update Log/更新记录：
+
+- November 2025: Open-source mechanical structure
+- January 2026: Open-source slave computer control software
+- 2025年11月 开源机械结构
+- 2026年1月 开源下位机控制软件
+- ……
+
