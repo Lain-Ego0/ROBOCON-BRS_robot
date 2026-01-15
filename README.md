@@ -60,9 +60,9 @@ Data Reading Demonstration in Calibration Mode
 # Update Log/更新记录：
 
 - November 2025: Open-source mechanical structure
-- January 2026: Open-source slave computer control software
+- December 2025: Open-source slave computer control software
 - 2025年11月 开源机械结构
-- 2026年1月 开源下位机控制软件
+- 2025年12月 开源下位机控制软件
 - ……
 
 # Project Acknowledgements
