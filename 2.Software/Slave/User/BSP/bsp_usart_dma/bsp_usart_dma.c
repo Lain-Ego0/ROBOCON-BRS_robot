@@ -2,7 +2,7 @@
 #include "GO_M8010_6.h"
 
 uint8_t RC[18];
-extern MOTOR_recv motor_feedback_data;//MDA存储数据后，在中断中用于电机ID判断
+extern MOTOR_recv motor_feedback_data;//DMA存储数据后，在中断中用于电机ID判断
 
 /**
   * @brief  USART6 TX DMA 配置
@@ -63,7 +63,7 @@ void USART1_DMA_Config(void)
 	/* 确保DMA数据流复位完成 */
 	while (DMA_GetCmdStatus(RC_USART_DMA_STREAM) != DISABLE){}
 
-	DMA_InitStructure.DMA_Channel = RC_USART_DMA_CHANNEL;               	/* usart3 Rx对应dma1，通道4，数据流1 */
+	DMA_InitStructure.DMA_Channel = RC_USART_DMA_CHANNEL;               	/* usart1 Rx对应dma2，通道4，数据流2 */
     DMA_InitStructure.DMA_PeripheralBaseAddr = RC_USART_DR_BASE;       		/* 设置DMA源：串口数据寄存器地址 */
     DMA_InitStructure.DMA_Memory0BaseAddr = (u32)(RC);                  	/* 内存地址(要传输的变量的指针) */
     DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;             	/* 方向：从外设到内存 */

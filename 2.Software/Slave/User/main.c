@@ -1,6 +1,5 @@
 #include "main.h"
 
-// 全局心跳标志，由定时器中断置位
 volatile uint8_t g_system_tick = 0;
 
 /* 全局变量 */
@@ -9,6 +8,9 @@ uint8_t Motor_Rxflag = 0;
 uint8_t Motor_Rx_date = 0;
 
 volatile int RC_RX_flag = 0;
+
+int rc_watchdog_count = 0;
+#define RC_TIMEOUT_MAX 500 // 500ms 超时
 
 // 时间与步态参数
 int tim_t = 0; // 启动延时
@@ -53,10 +55,18 @@ int main(void)
 
     // 3. 启动定时器 
 	TIMx_Configuration(); 
-	while(tim_t < 1000) { 
-        if(g_system_tick) { tim_t++; g_system_tick = 0; }
+	
+	// 4.上电保护
+	while(tim_t < 2000) { 
+        if(g_system_tick) { 
+            tim_t++; 
+            g_system_tick = 0; 
+        }
     }
-
+	memset(&rc_rc, 0, sizeof(rc_rc));
+    rc_rc.s1 = 2; // 系统模式
+    rc_rc.s2 = 3; // 趴下状态
+	
 	while(1)
 	{	
         if (g_system_tick)
@@ -64,16 +74,26 @@ int main(void)
             g_system_tick = 0; // 清除标志
 
             // --- 1. 数据处理 ---
-            rc_rc_date(); // 解析遥控数据
+			if (RC_RX_flag == 1) {
+                RC_RX_flag = 0;
+                rc_rc_date(); // 解析数据
+                rc_watchdog_count = 0; // 喂狗
+            } else {
+                rc_watchdog_count++;
+            }
+			
+			if (rc_watchdog_count > RC_TIMEOUT_MAX) {
+                // 遥控器超时强制进入安全模式
+                rc_rc.ch0 = 0; rc_rc.ch1 = 0; rc_rc.ch2 = 0; rc_rc.ch3 = 0;
+                rc_rc.s1 = 2; 
+                rc_rc.s2 = 3; 
+                if(rc_watchdog_count > 10000) rc_watchdog_count = 10000; 
+            }
 
             // --- 2. 步态轨迹规划 ---
-            // 腿1 (右前) -> Index 0,1
             foot_track(&foot_track_x1, &foot_track_y1, step_rate, time_currently, 200, time_turn, 2, 1);           
-            // 腿2 (左前) -> Index 2,3
             foot_track(&foot_track_x2, &foot_track_y2, step_rate, time_currently, 200, time_turn, 1, 3);         
-            // 腿3 (右后) -> Index 4,5
             foot_track(&foot_track_x3, &foot_track_y3, step_rate, time_currently, 200, time_turn, 2, 2);          
-            // 腿4 (左后) -> Index 6,7
             foot_track(&foot_track_x4, &foot_track_y4, step_rate, time_currently, 200, time_turn, 1, 4);
 
             // --- 3. 运动逆解 ---
@@ -86,12 +106,12 @@ int main(void)
             Motor_pid_compute_all();	//PID输出		           
             Motor_data_update_all();	//更新数据帧
             
-            // --- 5. 通信发送 ---
+            // --- 5. 通信发送 --- 大约使用0.8ms，也可以修改运行时间
             for(int k=0; k<8; k++) {
                 Motor_date_send_sequential(&motor_send_index);
             }
-            // 强制复位索引，确保下个周期从头开始
-            motor_send_index = 0;
+            
+            motor_send_index = 0; // 复位索引确保同步
         }
 	}
 }

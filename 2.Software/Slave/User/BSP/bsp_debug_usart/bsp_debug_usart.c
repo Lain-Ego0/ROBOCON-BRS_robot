@@ -23,7 +23,7 @@ void NVIC_Configuration(void)
 	NVIC_InitTypeDef NVIC_InitStructure;
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
 	/* ≈‰÷√÷–∂œ‘¥ */
-	NVIC_InitStructure.NVIC_IRQChannel = RS485_USART_IRQ;
+	NVIC_InitStructure.NVIC_IRQChannel = USART6_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;

@@ -96,6 +96,10 @@ void Motor_Mode_Init(void) {
         Leg_Motors[i].dir_sign = Motor_Directions[i];
         Leg_Motors[i].control.id = Leg_Motors[i].id;
         Leg_Motors[i].control.mode = 1;
+		
+		// 初始化目标角度为当前角度，防止上电瞬间转动
+        Leg_Motors[i].target_angle = 0.0f;
+		
         modify_data(&Leg_Motors[i].control);
     }
 }
@@ -138,13 +142,15 @@ void counter_motion(float X, float Y, float *range1, float *range2) {
     if (L < LEG_MIN_LEN) L = LEG_MIN_LEN;
 
     float sin_arg = X / L;
-    if (sin_arg > 1.0f) sin_arg = 1.0f; if (sin_arg < -1.0f) sin_arg = -1.0f;
+    if (sin_arg > 1.0f) sin_arg = 1.0f; 
+    if (sin_arg < -1.0f) sin_arg = -1.0f;
     float range_Leg = asinf(sin_arg);
 
     float cos_arg = (L * L + LEG_L1 * LEG_L1 - LEG_L2 * LEG_L2) / (2.0f * LEG_L1 * L);
-    if (cos_arg > 1.0f) cos_arg = 1.0f; if (cos_arg < -1.0f) cos_arg = -1.0f;
+    if (cos_arg > 1.0f) cos_arg = 1.0f; 
+    if (cos_arg < -1.0f) cos_arg = -1.0f;
     float range_separate = acosf(cos_arg);
-
+	
     *range1 = (PI - (range_separate - range_Leg)) * REDUCTION_RATIO;
     *range2 = (PI - (range_separate + range_Leg)) * REDUCTION_RATIO;
 }
@@ -229,6 +235,9 @@ static void Handle_Locomotion(float *X, float *Y, int Tm, int time_now, int move
     float start = is_fwd ? g_gait.start_point : -g_gait.start_point;
     float end   = is_fwd ? -g_gait.start_point : g_gait.start_point;
 
+	// 如果只是原地转向（无前进分量），修正步幅
+    if (!is_fwd && !is_bwd) { start=0; end=0; }
+	
     if (move_mode == 1) { // 支撑相
         *X = start + (end - start) * t;
         *Y = g_gait.leg_high;
@@ -295,6 +304,8 @@ static void Handle_Jump(float *X, float *Y, int dir_mode) {
     *flag = 1; 
     float t = (float)(*timer);
     
+	if (t < 0) t = 0;
+	
     const float T_SQUAT = 500;
     const float T_JUMP = 700;
     const float T_LAND = 900;
@@ -316,6 +327,8 @@ static void Handle_Jump(float *X, float *Y, int dir_mode) {
         float reset_t = (t - T_RESET) / 500.0f;
         *X = 0; 
         *Y = 200.0f; 
+		*flag = 0; 
+		*timer = 0;
     }
 }
 
