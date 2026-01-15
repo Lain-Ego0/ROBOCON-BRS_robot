@@ -9,9 +9,17 @@ In the 2025 season, I was responsible for the full-stack R&D of the quadruped ro
 
 ![image](./assets/models.png)
 
+Post-calculation Visualization of Trajectory Demonstration and Inverse Kinematics Solution Demonstration in MATLAB
+
+MATLAB计算后可视化的轨迹演示以及其逆解算演示
+
 ![image](./assets/Portfolio-01-1.png)
 
 ![image](./assets/Portfolio-01-2.png)
+
+The system architecture diagram is shown in the figure.
+
+系统架构图如图所示
 
 ![image](./assets/Portfolio-01-3.png)
 
