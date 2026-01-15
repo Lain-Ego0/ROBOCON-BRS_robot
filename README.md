@@ -23,6 +23,8 @@ The system architecture diagram is shown in the figure.
 
 ![image](./assets/Portfolio-01-3.png)
 
-校准模式演示：
+Data Reading Demonstration in Calibration Mode
+
+校准模式的数据读取演示
 
 ![image-20260111221812117](./assets/image-20260111221812117.png)
