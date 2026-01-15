@@ -1,70 +1,82 @@
-#include "ros/ros.h"  
-#include "serial_send.h"
-
-
-#include <sstream>  
+#include <ros/ros.h>
+#include <nav_msgs/Odometry.h>
 #include <geometry_msgs/Twist.h>
-#include <string>
-#include <iostream>
-
-// 接收到订阅的消息后，会进入消息回调函数
-void callback(const geometry_msgs::Twist& cmd_vel)
+#include <serial/serial.h>
+#include <tf/transform_datatypes.h>  // 加入用于四元数转欧拉角
+ 
+struct DataBuffer {
+    double x = 0.0;
+    double y = 0.0;
+    double vx = 0.0;
+    double vy = 0.0;
+    double yaw_rate = 0.0;
+    double yaw = 0.0;
+    bool odom_received = false;
+    bool cmd_received = false;
+};
+ 
+int main(int argc, char** argv)
 {
-    // receive the msg from cmd_vel
-    ROS_INFO("Receive a /cmd_vel msg\n");
-    ROS_INFO("The linear  velocity: x=%f, y=%f, z=%f\n",cmd_vel.linear.x,cmd_vel.linear.y,cmd_vel.linear.z);
-    ROS_INFO("The augular velocity: roll=%f, pitch=%f, yaw=%f\n",cmd_vel.angular.x, cmd_vel.angular.y, cmd_vel.angular.z);
-    // put the data in union
-    Serial_Package serial_package;
-    serial_package.header = 0xA5;
-    serial_package.linear_x = cmd_vel.linear.x;
-    serial_package.linear_y = cmd_vel.linear.y;
-    serial_package.angular_z = cmd_vel.angular.z;
-
-    sentry_ser.flush ();
-    sentry_ser.write(serial_package.Send_Buffer,data_len);
-    ROS_INFO("\nSend date finished!\n");
-}
-
-
-int main (int argc, char** argv){
-
-    ros::init(argc, argv, "sentry_send");
-
-    ros::NodeHandle n;
-    n.getParam("cmd_vel_topic", cmd_vel_topic);
-    std::cout<<argv[1]<<std::endl;
-    std::cout<<argc<<std::endl;
-    try
-    {
-        std::string serial_port;
-        if(argc == 2){
-            serial_port = argv[1];
-        }
-        else{
-            serial_port = "/dev/ttyUSB0";
-        }
-        std::cout<<serial_port<<std::endl;
-        sentry_ser.setPort(serial_port);
-        sentry_ser.setBaudrate(115200);
-        serial::Timeout to = serial::Timeout::simpleTimeout(1000);
-        sentry_ser.setTimeout(to);
-        sentry_ser.open();
+    ros::init(argc, argv, "serial_sender_minimal");
+    ros::NodeHandle nh;
+ 
+    serial::Serial serial_port;
+    try {
+        serial_port.setPort("/dev/ttyUSB0");
+        serial_port.setBaudrate(115200);
+        serial::Timeout timeout = serial::Timeout::simpleTimeout(1000);
+        serial_port.setTimeout(timeout);
+        serial_port.open();
     }
-    catch (serial::IOException& e)
-    {
-        ROS_ERROR_STREAM("Unable to open port ");
-        return -1;
+    catch (serial::IOException& e) {
+        ROS_ERROR_STREAM("无法打开串口: " << e.what());
+        return 1;
     }
-    if(sentry_ser.isOpen()){
-        ROS_INFO_STREAM("Serial Port opened");
-    }else{
-        return -1;
-    }
-    ROS_INFO_STREAM("Init Finished!");
-
-    // 创建一个Subscriber，订阅名为data_chatter的topic，注册回调函数chatterCallback 
-    ros::Subscriber sub = n.subscribe(cmd_vel_topic, 1000, callback); 
-
+ 
+    DataBuffer buffer;
+ 
+    // 订阅 odometry
+    ros::Subscriber odom_sub = nh.subscribe<nav_msgs::Odometry>("/Odometry", 10,
+        [&](const nav_msgs::Odometry::ConstPtr& msg) {
+            buffer.x = msg->pose.pose.position.x;
+            buffer.y = msg->pose.pose.position.y;
+ 
+            // 提取四元数并转换为偏航角
+            tf::Quaternion q(
+                msg->pose.pose.orientation.x,
+                msg->pose.pose.orientation.y,
+                msg->pose.pose.orientation.z,
+                msg->pose.pose.orientation.w
+            );
+            tf::Matrix3x3 m(q);
+            double roll, pitch, yaw;
+            m.getRPY(roll, pitch, yaw);
+            buffer.yaw = yaw;
+ 
+            buffer.odom_received = true;
+ 
+            if (buffer.cmd_received) {
+                std::string data = "x:" + std::to_string(buffer.x) +
+                    ",y:" + std::to_string(buffer.y) +
+                    ",yaw:" + std::to_string(buffer.yaw) +
+                    ",vx:" + std::to_string(buffer.vx) +
+                    ",vy:" + std::to_string(buffer.vy) +
+                    ",yaw_rate:" + std::to_string(buffer.yaw_rate) + "\n";
+                serial_port.write(data);
+                ROS_INFO_STREAM("[Serial Send] " << data);
+            }
+        });
+ 
+    // 订阅 cmd_vel
+    ros::Subscriber cmd_sub = nh.subscribe<geometry_msgs::Twist>("/cmd_vel", 10,
+        [&](const geometry_msgs::Twist::ConstPtr& msg) {
+            buffer.vx = msg->linear.x;
+            buffer.vy = msg->linear.y;
+            buffer.yaw_rate = msg->angular.z;
+            buffer.cmd_received = true;
+        });
+ 
     ros::spin();
+    serial_port.close();
+    return 0;
 }
