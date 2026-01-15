@@ -84,3 +84,6 @@ graph TD
     F --> G[发布导航目标点]
     G --> H[串口模块 订阅 /Odometry + /cmd_vel 话题数据]
 ```
+
+Slave computer
+
