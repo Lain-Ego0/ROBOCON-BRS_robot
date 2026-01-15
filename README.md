@@ -65,3 +65,22 @@ Data Reading Demonstration in Calibration Mode
 - 2026年1月 开源下位机控制软件
 - ……
 
+# Project Acknowledgements
+
+Host computer
+
+- https://github.com/66Lau/NEXTE_Sentry_Nav
+
+- [使用mid360从0开始搭建实物机器人入门级导航系统，基于Fast_Lio,Move_Base](https://blog.csdn.net/weixin_52612260/article/details/134124028)
+- [基于Mid360、FAST-LIO2（建图）与MOVE-BASE（导航）的串口发送方案](https://blog.csdn.net/Hbutneymar/article/details/147161479)
+
+```mermaid
+graph TD
+    A[MID360激光雷达 发送点云数据] --> B[FAST_LIO2 三维激光建图]
+    B --> C[三维点云PCD → 二维栅格地图 格式转换]
+    C --> D[机器人全局重定位]
+    D --> E[ROS发布机器人初始位置]
+    E --> F[move_base导航框架 路径规划与导航]
+    F --> G[发布导航目标点]
+    G --> H[串口模块 订阅 /Odometry + /cmd_vel 话题数据]
+```
