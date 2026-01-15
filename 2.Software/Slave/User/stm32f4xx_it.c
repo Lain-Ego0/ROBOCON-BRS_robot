@@ -11,11 +11,11 @@ extern Motor_Unit_TypeDef Leg_Motors[8];
 extern volatile uint8_t g_system_tick;
 extern MOTOR_recv motor_feedback_data; 
 
-// 变量引用 (Dog_Iinit 已移交 motor_control.c 管理，此处仅为了兼容 extern 定义，不进行操作)
+// 变量引用
 extern int Dog_Iinit;
 int Dog_flag = 1;
 
-// 跳跃变量 (计数逻辑保留在中断中，或者也可以移出，但暂时保留以防影响时序)
+// 跳跃变量
 extern int dog_jump_time;		
 extern int dog_jump_flag;		
 extern int dog_jump_time_2;	
@@ -33,11 +33,7 @@ extern int time_turn;
 // -----------------------------------------------------------
 void GENERAL_TIM_IRQHandler (void)
 {
-    g_system_tick = 1;
-
-    // [删除] Dog_Iinit 的自增逻辑已移至 motor_control.c 的 Handle_System 中
-    // if(Dog_Iinit < 2001) Dog_Iinit++; 
-	
+    g_system_tick = 1;	
     time_currently++;
 	time_turn++;
 	

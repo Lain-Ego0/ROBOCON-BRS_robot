@@ -51,9 +51,8 @@ int main(void)
 	PID_Init();						
 	Motor_Mode_Init();				
 
-    // 3. 启动定时器 (核心心跳)
+    // 3. 启动定时器 
 	TIMx_Configuration(); 
-    // 简单的启动稳定延时
 	while(tim_t < 1000) { 
         if(g_system_tick) { tim_t++; g_system_tick = 0; }
     }
@@ -83,12 +82,11 @@ int main(void)
             counter_motion(foot_track_x3, foot_track_y3, &Leg_Motors[4].target_angle, &Leg_Motors[5].target_angle);
             counter_motion(foot_track_x4, foot_track_y4, &Leg_Motors[7].target_angle, &Leg_Motors[6].target_angle);
 
-            // --- 4. 控制算法 ---
+            // --- 4. 控制 ---
             Motor_pid_compute_all();	//PID输出		           
             Motor_data_update_all();	//更新数据帧
             
             // --- 5. 通信发送 ---
-            // 在 1ms 内尽量发送所有电机数据。
             for(int k=0; k<8; k++) {
                 Motor_date_send_sequential(&motor_send_index);
             }

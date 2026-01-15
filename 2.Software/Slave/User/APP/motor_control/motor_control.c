@@ -8,7 +8,7 @@
 #include <stdlib.h> 
 
 /* -------------------------------------------------------------------------
-   配置参数
+   1.配置参数
    ------------------------------------------------------------------------- */
 #define SPEED_P 0.01f
 #define SPEED_I 0.0006f
@@ -77,9 +77,9 @@ typedef struct {
 
 static GaitConfig_t g_gait;
 
-// -------------------------------------------------------------------------
-// 初始化与 PID 函数
-// -------------------------------------------------------------------------
+/* -------------------------------------------------------------------------
+   2.初始化与 PID 函数
+   ------------------------------------------------------------------------- */
 
 void PID_Init(void) {
     for(int i = 0; i < 8; i++) {
@@ -100,7 +100,7 @@ void Motor_Mode_Init(void) {
     }
 }
 
-// PID计算函数：增加校准模式判断
+// 校准模式
 void Motor_pid_compute_all(void) {
     for(int i = 0; i < 8; i++) {
         // 如果处于校准模式，强制输出力矩为0，方便手动掰腿
@@ -149,9 +149,9 @@ void counter_motion(float X, float Y, float *range1, float *range2) {
     *range2 = (PI - (range_separate + range_Leg)) * REDUCTION_RATIO;
 }
 
-// -------------------------------------------------------------------------
-// 状态处理逻辑
-// -------------------------------------------------------------------------
+/* -------------------------------------------------------------------------
+   3.状态处理逻辑
+   ------------------------------------------------------------------------- */
 
 static inline float Get_Cycloid(float start, float end, float t) {
     float len = start - end;
@@ -319,9 +319,9 @@ static void Handle_Jump(float *X, float *Y, int dir_mode) {
     }
 }
 
-// ==========================================
-// 主入口函数：逻辑总控
-// ==========================================
+/* -------------------------------------------------------------------------
+   4.主入口函数
+   ------------------------------------------------------------------------- */
 void foot_track(float *X, float *Y, int Tm, int time_currently, int turn_Tm, int time_turn, int move_mode, int direction_mode)
 {
     Update_Gait_Params();
@@ -340,7 +340,7 @@ void foot_track(float *X, float *Y, int Tm, int time_currently, int turn_Tm, int
         state = S_JUMP; 
     }
     else if (rc_rc.s1 == 3) { // [S1=3] 运动模式
-        if (abs(rc_rc.ch0) > 110) state = S_SPOT_TURN; // 原地转向
+        if (abs(rc_rc.ch0) > 50) state = S_SPOT_TURN; // 原地转向
         else state = S_MOVE; // 前进/后退/混合转向
     }
 

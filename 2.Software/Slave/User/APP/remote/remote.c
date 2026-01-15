@@ -11,8 +11,8 @@ void rc_rc_date(void)
 	rc_rc.ch1 = 0;
 	rc_rc.ch2 = 0;
 	rc_rc.ch3 = 0;
-	rc_rc.s1 = 1;//值---1，2，3
-	rc_rc.s2 = 1;//值---1，2，3
+	rc_rc.s1 = 1;
+	rc_rc.s2 = 1;
 	//注意数据的顺序----
 	rc_rc.ch0 = ((int16_t)RC[0] | ((int16_t)RC[1] << 8)) & 0x07FF; 
 	rc_rc.ch1 = (((int16_t)RC[1] >> 3) | ((int16_t)RC[2] << 5))& 0x07FF;
